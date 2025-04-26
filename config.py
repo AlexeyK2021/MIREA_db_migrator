@@ -8,4 +8,9 @@ psql_db = "dbstud"
 
 # mongoUrl = f"mongodb://{VbIp}:27017/"
 prometheusUrl = f"http://{VbIp}:9090/api/v1/"
+
 # greenplumUrl = f"postgres://gpadmin:dataroad@{VbIp}:5432/mireadb"
+green_ip = VbIp
+green_user = "gpadmin"
+green_password = "dataroad"
+green_db = "mireadb"
