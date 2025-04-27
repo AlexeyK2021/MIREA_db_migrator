@@ -1,97 +1,70 @@
-from msilib import schema
-
-from config import\
-    mongo_get_collection
 from greenplum import insert_sex, insert_team, insert_athlete, insert_city, insert_season, insert_game, insert_sport, \
-    insert_event, insert_medal, insert_participation, insert_result, greenplum_get_connection
-from postgresql import psql_select_dictionaries
+    insert_event, insert_medal, insert_participation, insert_result, greenplum_get_connection, truncate_database
+from mongo import mongo_get_collection, mongo_get_coll, mongo_get_columns
+from postgresql import psql_select_dictionaries, psql_get_team, psql_get_athlete, psql_get_game, psql_get_event, \
+    psql_get_connection
+from prometheus import prometheus_get_metrics_by_series
 
 
-def migrate_sex(pconn, gconn):
+def migrate_sex(pconn, gconn, mcoll):
     print("Migrating sex")
-    sex = psql_select_dictionaries(pconn, "sex")
+    sex = psql_select_dictionaries(pconn, "sex", "value")
+    sexm = mongo_get_coll(mcoll, "Sex")
+    sex.update(sexm)
     insert_sex(gconn, sex)
 
 
-def migrate_team(pconn, gconn):
+def migrate_team(pconn, gconn, mcoll):
     print("Migrating team")
-    with pconn.cursor() as pcur:
-        pcur.execute("SELECT team.name, noc.code " +
-                     "FROM kalashnikov_aa.team " +
-                     "JOIN noc ON noc.id = team.noc_id")
-        team = pcur.fetchall()
-    # print(team)
-
-    insert_team(gconn, team)
+    teams = psql_get_team(pconn)
+    insert_team(gconn, teams)
 
 
-def migrate_athlete(pconn, gconn):
+def migrate_athlete(pconn, gconn, mcoll):
     print("Migrating athlete")
-    athlete = list()
-    with pconn.cursor() as pcur:
-        pcur.execute("SELECT a.name, s.value, a.age, a.height, a.weight, t.name " +
-                     "FROM kalashnikov_aa.athlete AS a " +
-                     "JOIN team AS t ON a.team_id = t.id " +
-                     "JOIN sex AS s ON a.sex_id = s.id ")
-        athlete = pcur.fetchall()
-    print(athlete)
-
+    athlete = psql_get_athlete(pconn)
     insert_athlete(gconn, athlete)
 
 
-def migrate_city(pconn, gconn):
+def migrate_city(pconn, gconn, mcoll):
     print("Migrating city")
-    city = psql_select_dictionaries(pconn, "city")
+    city = psql_select_dictionaries(pconn, "city", "name")
     insert_city(gconn, city)
 
 
-def migrate_season(pconn, gconn):
+def migrate_season(pconn, gconn, mcoll):
     print("Migrating season")
-    season = psql_select_dictionaries(pconn, "season")
+    season = psql_select_dictionaries(pconn, "season", "name")
     insert_season(gconn, season)
 
 
-def migrate_game(pconn, gconn):
+def migrate_game(pconn, gconn, mcoll):
     print("Migrating game")
-    game = list()
-    with pconn.cursor() as pcur:
-        pcur.execute("SELECT g.name, g.year, s.name, c.name " +
-                     "FROM kalashnikov_aa.game AS g " +
-                     "JOIN city AS c ON g.city_id = c.id " +
-                     "JOIN season AS s ON g.season_id = s.id")
-        game = pcur.fetchall()
-    print(game)
-
+    game = psql_get_game(pconn)
     insert_game(gconn, game)
 
 
-def migrate_sport(pconn, gconn):
+def migrate_sport(pconn, gconn, mcoll):
     print("Migrating sport")
-    sport = psql_select_dictionaries(pconn, "sport")
+    sport = psql_select_dictionaries(pconn, "sport", "name")
     insert_sport(gconn, sport)
 
 
-def migrate_event(pconn, gconn):
+def migrate_event(pconn, gconn, mcoll):
     print("Migrating event")
-    event = list()
-    with pconn.cursor() as pcur:
-        pcur.execute("SELECT e.name, s.name FROM kalashnikov_aa.event AS e JOIN sport AS s ON e.sport_id=s.id")
-        event = pcur.fetchall()
-    print(event)
-
+    event = psql_get_event(pconn)
     insert_event(gconn, event)
 
 
-def migrate_medal(pconn, gconn):
+def migrate_medal(pconn, gconn, mcoll):
     print("Migrating medal")
-    medal = psql_select_dictionaries(pconn, "medal")
-
+    medal = psql_select_dictionaries(pconn, "medal", "name")
     insert_medal(gconn, medal)
 
 
-def migrate_participation(pconn, gconn):
+def migrate_participation(pconn, gconn, mcoll):
     print("Migrating participation")
-    participation = psql_select_dictionaries(pconn, "participation")
+    participation = psql_select_dictionaries(pconn, "participation_values", "*")
     insert_participation(gconn, participation)
 
 
@@ -102,8 +75,7 @@ def migrate_result(gconn):
 
 
 def sandbox(mcol):
-    for a in mcol.find({"Name": "Viktor Andreyevich Aboimov"}):
-        print(a)
+    print(mongo_get_columns(mcol, ["Team", "NOC"]))
 
 
 if __name__ == '__main__':
@@ -113,20 +85,27 @@ if __name__ == '__main__':
 
     with green_conn as gconn:
         with psql_conn as pconn:
-            # migrate_sex(pconn, gconn)
-            # migrate_team(pconn, gconn)
-            # migrate_athlete(pconn, gconn)
-            # migrate_city(pconn, gconn)
-            # migrate_season(pconn, gconn)
-            # migrate_game(pconn, gconn)
-            # migrate_sport(pconn, gconn)
-            # migrate_event(pconn, gconn)
-            # migrate_medal(pconn, gconn)
-            # migrate_participations(pconn, gconn)
-            # print(prometheus_get_metrics_by_series("olympic_athlete_time"))
+            truncate_database(gconn, "inmon")
+            migrate_sex(pconn, gconn, mongo_coll)
+            gconn.commit()
+            migrate_team(pconn, gconn, mongo_coll)
+            gconn.commit()
+            migrate_athlete(pconn, gconn, mongo_coll)
+            gconn.commit()
+            migrate_city(pconn, gconn, mongo_coll)
+            gconn.commit()
+            migrate_season(pconn, gconn, mongo_coll)
+            gconn.commit()
+            migrate_game(pconn, gconn, mongo_coll)
+            gconn.commit()
+            migrate_sport(pconn, gconn, mongo_coll)
+            gconn.commit()
+            migrate_event(pconn, gconn, mongo_coll)
+            gconn.commit()
+            migrate_medal(pconn, gconn, mongo_coll)
+            gconn.commit()
+            migrate_participation(pconn, gconn, mongo_coll)
+            gconn.commit()
             migrate_result(gconn)
-            # sandbox()
+            gconn.commit()
             # pconn.rollback()
-
-        sandbox(mongo_coll)
-        gconn.commit()
