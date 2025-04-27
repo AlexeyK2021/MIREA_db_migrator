@@ -1,0 +1,18 @@
+VbIp = "192.168.1.120"
+
+# psqlUrl = "postgres://kalashnikov_aa:nTCv&%25eX&q@7bd8a-rw.db.pub.dbaas.postgrespro.ru/dbstud"
+psql_ip = "7bd8a-rw.db.pub.dbaas.postgrespro.ru"
+psql_user = "kalashnikov_aa"
+psql_password = "nTCv&%eX&q"
+psql_db = "dbstud"
+
+mongoUrl = f"mongodb://{VbIp}:27017/"
+mongo_db_name = "mireaDB"
+mongo_coll_name = "athletes"
+prometheus_url = f"http://{VbIp}:9090/api/v1/"
+
+# greenplumUrl = f"postgres://gpadmin:dataroad@{VbIp}:5432/mireadb"
+green_ip = VbIp
+green_user = "gpadmin"
+green_password = "dataroad"
+green_db = "mireadb"
