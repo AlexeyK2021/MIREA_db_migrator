@@ -1,24 +1,9 @@
-import struct
+import json
 from msilib import schema
+import pandas as pd
 
-import psycopg2
-
-from config import psql_db, psql_password, psql_ip, psql_user, green_db, green_user, green_password, green_ip
-from prometheus import prometheus_get_metrics_by_series
-
-
-def psql_get_connection():
-    try:
-        return psycopg2.connect(database=psql_db, user=psql_user, password=psql_password, host=psql_ip)
-    except Exception as e:
-        print('Can`t establish connection to database PSQL')
-
-
-def greenplum_get_connection():
-    try:
-        return psycopg2.connect(database=green_db, user=green_user, password=green_password, host=green_ip)
-    except psycopg2.Error as e:
-        print('Can`t establish connection to database GREENPLUM')
+from connect import psql_get_connection, greenplum_get_connection, prometheus_get_metrics_by_series
+from prom_green_value_connector import event_name
 
 
 def migrate_sex(pconn, gconn):
@@ -176,32 +161,76 @@ def migrate_participations(pconn, gconn):
                          ")")
 
 
-def migrate_result():
-    pass
+def migrate_result(gconn):
+    print("Migrate results")
+    results = prometheus_get_metrics_by_series("olympic_athlete_time")["data"]
+
+    with gconn.cursor() as gcur:
+        part_id = 0
+        athlete_id = 0
+        event_id = 0
+        game_id = 0
+
+        for result in results:
+            name = "%" + result['athlete_name'].replace(" ", "%").lower() + "%"
+            if "'" in name:
+                continue
+
+            gcur.execute(f"SELECT id FROM inmon.athlete WHERE LOWER(name) LIKE '{name}'")
+            athlete_id = gcur.fetchone()
+            if athlete_id is None:
+                continue
+            else:
+                athlete_id = athlete_id[0]
+
+            event_ = event_name[result['event']]
+            gcur.execute(f"SELECT id FROM inmon.event WHERE name LIKE '{event_}'")
+            event_id = gcur.fetchone()[0]
+
+            year = int(result['year'])
+            gcur.execute(
+                f"SELECT id FROM inmon.game WHERE season_id = (SELECT id FROM inmon.season WHERE name = 'Summer') AND year = {year}")
+            game_id = gcur.fetchone()[0]
+
+            gcur.execute(
+                f"SELECT id FROM inmon.participation WHERE athlete_id = {athlete_id} AND game_id = {game_id} AND event_id = {event_id}")
+            part_id = gcur.fetchone()
+            if part_id is None:
+                continue
+            else:
+                part_id = part_id[0]
+
+            if "value" not in result:
+                continue
+            value = float(result['value'])
+            gcur.execute(f"INSERT INTO inmon.result(participation_id, value) VALUES ({part_id}, {value})")
+
+
+def sandbox():
+    results = prometheus_get_metrics_by_series("olympic_athlete_time")["data"]
+    # print(results)
+    data = pd.read_json(json.dumps(results))
+    print(data["event"].value_counts())
 
 
 if __name__ == '__main__':
     psql_conn = psql_get_connection()
     green_conn = greenplum_get_connection()
-    try:
-        with psql_conn as pconn:
-            with green_conn as gconn:
-                # migrate_sex(pconn, gconn)
-                # migrate_team(pconn, gconn)
-                # migrate_athlete(pconn, gconn)
-                # migrate_city(pconn, gconn)
-                # migrate_season(pconn, gconn)
-                # migrate_game(pconn, gconn)
-                # migrate_sport(pconn, gconn)
-                # migrate_event(pconn, gconn)
-                # migrate_medal(pconn, gconn)
-                migrate_participations(pconn, gconn)
-                # print(prometheus_get_metrics_by_series("olympic_athlete_time"))
+    with psql_conn as pconn:
+        with green_conn as gconn:
+            # migrate_sex(pconn, gconn)
+            # migrate_team(pconn, gconn)
+            # migrate_athlete(pconn, gconn)
+            # migrate_city(pconn, gconn)
+            # migrate_season(pconn, gconn)
+            # migrate_game(pconn, gconn)
+            # migrate_sport(pconn, gconn)
+            # migrate_event(pconn, gconn)
+            # migrate_medal(pconn, gconn)
+            # migrate_participations(pconn, gconn)
+            # print(prometheus_get_metrics_by_series("olympic_athlete_time"))
+            migrate_result(gconn)
+            # sandbox()
 
-                gconn.commit()
-                pconn.rollback()
-    except Exception as e:
-        print(e)
-        pconn.rollback()
-        psql_conn.close()
-        green_conn.close()
+            gconn.commit()
+            pconn.rollback()
