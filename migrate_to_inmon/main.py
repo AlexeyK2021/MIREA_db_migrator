@@ -2,7 +2,7 @@ from greenplum import insert_sex, insert_team, insert_athlete, insert_city, inse
     insert_event, insert_medal, insert_participation, insert_result, greenplum_get_connection, truncate_database
 from mongo import mongo_get_collection, mongo_get_coll, mongo_get_columns
 from postgresql import psql_select_dictionaries, psql_get_team, psql_get_athlete, psql_get_game, psql_get_event, \
-    psql_get_connection
+    psql_get_connection, psql_get_participation
 from prometheus import prometheus_get_metrics_by_series
 
 
@@ -64,7 +64,7 @@ def migrate_medal(pconn, gconn, mcoll):
 
 def migrate_participation(pconn, gconn, mcoll):
     print("Migrating participation")
-    participation = psql_select_dictionaries(pconn, "participation_values", "*")
+    participation = psql_get_participation(pconn)
     insert_participation(gconn, participation)
 
 
@@ -85,27 +85,27 @@ if __name__ == '__main__':
 
     with green_conn as gconn:
         with psql_conn as pconn:
-            truncate_database(gconn, "inmon")
-            migrate_sex(pconn, gconn, mongo_coll)
-            gconn.commit()
-            migrate_team(pconn, gconn, mongo_coll)
-            gconn.commit()
-            migrate_athlete(pconn, gconn, mongo_coll)
-            gconn.commit()
-            migrate_city(pconn, gconn, mongo_coll)
-            gconn.commit()
-            migrate_season(pconn, gconn, mongo_coll)
-            gconn.commit()
-            migrate_game(pconn, gconn, mongo_coll)
-            gconn.commit()
-            migrate_sport(pconn, gconn, mongo_coll)
-            gconn.commit()
-            migrate_event(pconn, gconn, mongo_coll)
-            gconn.commit()
-            migrate_medal(pconn, gconn, mongo_coll)
-            gconn.commit()
-            migrate_participation(pconn, gconn, mongo_coll)
-            gconn.commit()
+            # truncate_database(gconn, "inmon")
+            # migrate_sex(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_team(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_athlete(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_city(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_season(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_game(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_sport(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_event(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_medal(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_participation(pconn, gconn, mongo_coll)
+            # gconn.commit()
             migrate_result(gconn)
             gconn.commit()
             # pconn.rollback()

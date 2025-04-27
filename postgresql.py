@@ -10,7 +10,7 @@ def psql_get_connection():
         print('Can`t establish connection to database PSQL')
 
 
-def psql_select_dictionaries(pconn, table_name: str, column_name:str) -> set:
+def psql_select_dictionaries(pconn, table_name: str, column_name: str) -> set:
     """
     Selects all tables without FK
     :param pconn: postgres connection
@@ -80,3 +80,14 @@ def psql_get_event(pconn) -> list:
         event = pcur.fetchall()
     return event
 
+
+def psql_get_participation(pconn) -> list:
+    """
+    Returns data from participation table
+    :param pconn: postgres connection
+    :return: list[athlete_name:str, game_name:str, event_name:str, medal_name:str]
+    """
+    with pconn.cursor() as pcur:
+        pcur.execute("SELECT * FROM kalashnikov_aa.participation_values")
+        participation = pcur.fetchall()
+    return participation
