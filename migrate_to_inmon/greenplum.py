@@ -1,14 +1,4 @@
-import psycopg2
-
-from config import green_db, green_user, green_password, green_ip
 from prom_green_value_connector import event_name
-
-
-def greenplum_get_connection():
-    try:
-        return psycopg2.connect(database=green_db, user=green_user, password=green_password, host=green_ip)
-    except psycopg2.Error as e:
-        print('Can`t establish connection to database GREENPLUM')
 
 
 def insert_sex(gconn, sex: list):
@@ -276,26 +266,25 @@ def insert_result(gconn, results: list):
                 f"UPDATE inmon.participation SET result_id = {res_id} WHERE id = {part_id}")  # ошибка из-за того что нету в participation некоторых id
 
 
-def truncate_database(gconn, database_name):
+def truncate_database(gconn):
     """
     Truncate database
     :param gconn: greenplum connection
     :param database_name: database name to truncate
     :return:
     """
-    print(f"Truncate database {database_name}")
+    print(f"Truncate database Inmon")
     with gconn.cursor() as gcur:
-        if database_name == "inmon":
-            gcur.execute(f"TRUNCATE TABLE {database_name}.result")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.participation")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.athlete")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.game")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.event")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.medal")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.sport")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.season")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.sport")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.city")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.sex")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.noc")
-            gcur.execute(f"TRUNCATE TABLE {database_name}.team")
+        gcur.execute(f"TRUNCATE TABLE inmon.result")
+        gcur.execute(f"TRUNCATE TABLE inmon.participation")
+        gcur.execute(f"TRUNCATE TABLE inmon.athlete")
+        gcur.execute(f"TRUNCATE TABLE inmon.game")
+        gcur.execute(f"TRUNCATE TABLE inmon.event")
+        gcur.execute(f"TRUNCATE TABLE inmon.medal")
+        gcur.execute(f"TRUNCATE TABLE inmon.sport")
+        gcur.execute(f"TRUNCATE TABLE inmon.season")
+        gcur.execute(f"TRUNCATE TABLE inmon.sport")
+        gcur.execute(f"TRUNCATE TABLE inmon.city")
+        gcur.execute(f"TRUNCATE TABLE inmon.sex")
+        gcur.execute(f"TRUNCATE TABLE inmon.noc")
+        gcur.execute(f"TRUNCATE TABLE inmon.team")

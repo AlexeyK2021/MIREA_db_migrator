@@ -5,13 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="855f9f39-8c76-4951-b172-0898e33bc6b7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/migrate_to_kstar/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrate_to_kstar/greenplum.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrate_to_kstar/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrate_to_kstar/postgresql.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/MIREA_db_merger.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MIREA_db_merger.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/greenplum.py" beforeDir="false" afterPath="$PROJECT_DIR$/greenplum.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/greenplum.py" beforeDir="false" afterPath="$PROJECT_DIR$/migrate_to_inmon/greenplum.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrate_to_inmon/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/migrate_to_inmon/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mongo.py" beforeDir="false" afterPath="$PROJECT_DIR$/mongo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postgresql.py" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql.py" beforeDir="false" afterPath="$PROJECT_DIR$/migrate_to_inmon/postgresql.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,30 +41,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/YandexDisk/МИРЭА/2sem/Проектирование и разработка_БХД_Экз/RR/code/code&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.main (1).executor": "Run",
+    "Python.main (2).executor": "Debug",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "E:/Prog/Python/MIREA_db_merger",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\Prog\Python\MIREA_db_merger" />
       <recent name="E:\Prog\Python\MIREA_db_merger\migrate_to_inmon" />
+      <recent name="E:\Prog\Python\MIREA_db_merger" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main (1)">
+  <component name="RunManager" selected="Python.main (2)">
     <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MIREA_db_merger" />
       <option name="ENV_FILES" value="" />
@@ -75,6 +81,29 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/migrate_to_inmon/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MIREA_db_merger" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/migrate_to_kstar" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/migrate_to_kstar/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -108,6 +137,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main (2)" />
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.main" />
       </list>
@@ -137,6 +167,9 @@
       <workItem from="1746087327319" duration="348000" />
       <workItem from="1746436077493" duration="45000" />
       <workItem from="1746522242989" duration="921000" />
+      <workItem from="1746534782093" duration="1378000" />
+      <workItem from="1746538312841" duration="5048000" />
+      <workItem from="1746543375795" duration="579000" />
     </task>
     <servers />
   </component>
@@ -147,9 +180,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/greenplum.py</url>
-          <line>181</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/migrate_to_kstar/main.py</url>
+          <line>51</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -157,5 +190,6 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MIREA_db_merger$main.coverage" NAME="main Coverage Results" MODIFIED="1745666522103" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MIREA_db_merger$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1745778921533" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_inmon" />
+    <SUITE FILE_PATH="coverage/MIREA_db_merger$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1746543907046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_kstar" />
   </component>
 </project>
