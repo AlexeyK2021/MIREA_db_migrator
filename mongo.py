@@ -10,14 +10,14 @@ def mongo_get_collection():
         print('Can`t establish connection to database MONGODB')
 
 
-def mongo_get_coll(mcoll, column_name) -> set:
+def mongo_get_coll(mcoll, column_name) -> list:
     """
     Selects distinct values from column_name
     :param mcoll: mongo collection
     :param column_name: column to select values
     :return: list of distinct values
     """
-    return set(mcoll.distinct(column_name))
+    return list(set(mcoll.distinct(column_name)))
 
 
 def mongo_get_columns(mcoll, columns_name: list) -> list:

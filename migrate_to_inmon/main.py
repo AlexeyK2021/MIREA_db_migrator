@@ -1,24 +1,27 @@
 from greenplum import insert_sex, insert_team, insert_athlete, insert_city, insert_season, insert_game, insert_sport, \
-    insert_event, insert_medal, insert_participation, insert_result, greenplum_get_connection, truncate_database
+    insert_event, insert_medal, insert_participation, insert_result, greenplum_get_connection, truncate_database, \
+    insert_noc
 from mongo import mongo_get_collection, mongo_get_coll, mongo_get_columns
-from postgresql import psql_select_dictionaries, psql_get_team, psql_get_athlete, psql_get_game, psql_get_event, \
+from postgresql import psql_get_team, psql_get_athlete, psql_get_game, psql_get_event, \
     psql_get_connection, psql_get_participation
 from prometheus import prometheus_get_metrics_by_series
 
 
 def migrate_sex(pconn, gconn, mcoll):
     print("Migrating sex")
-    sex = psql_select_dictionaries(pconn, "sex", "value")
-    sexm = mongo_get_coll(mcoll, "Sex")
-    sex.update(sexm)
+    # sex = psql_select_dictionaries(pconn, "sex", "value")
+    sex = mongo_get_coll(mcoll, "Sex")
     insert_sex(gconn, sex)
 
+def migrate_noc(pconn, gconn, mcoll):
+    print("Migrating NOC")
+    noc = mongo_get_coll(mcoll, "NOC")
+    insert_noc(gconn, noc)
 
 def migrate_team(pconn, gconn, mcoll):
     print("Migrating team")
     teams = psql_get_team(pconn)
     insert_team(gconn, teams)
-
 
 def migrate_athlete(pconn, gconn, mcoll):
     print("Migrating athlete")
@@ -28,13 +31,15 @@ def migrate_athlete(pconn, gconn, mcoll):
 
 def migrate_city(pconn, gconn, mcoll):
     print("Migrating city")
-    city = psql_select_dictionaries(pconn, "city", "name")
+    # city = psql_select_dictionaries(pconn, "city", "name")
+    city = mongo_get_coll(mcoll, "City")
     insert_city(gconn, city)
 
 
 def migrate_season(pconn, gconn, mcoll):
     print("Migrating season")
-    season = psql_select_dictionaries(pconn, "season", "name")
+    # season = psql_select_dictionaries(pconn, "season", "name")
+    season = mongo_get_coll(mcoll, "Season")
     insert_season(gconn, season)
 
 
@@ -46,7 +51,8 @@ def migrate_game(pconn, gconn, mcoll):
 
 def migrate_sport(pconn, gconn, mcoll):
     print("Migrating sport")
-    sport = psql_select_dictionaries(pconn, "sport", "name")
+    # sport = psql_select_dictionaries(pconn, "sport", "name")
+    sport = mongo_get_coll(mcoll, "Sport")
     insert_sport(gconn, sport)
 
 
@@ -58,7 +64,8 @@ def migrate_event(pconn, gconn, mcoll):
 
 def migrate_medal(pconn, gconn, mcoll):
     print("Migrating medal")
-    medal = psql_select_dictionaries(pconn, "medal", "name")
+    # medal = psql_select_dictionaries(pconn, "medal", "name")
+    medal = mongo_get_coll(mcoll, "Medal")
     insert_medal(gconn, medal)
 
 
@@ -83,10 +90,13 @@ if __name__ == '__main__':
     green_conn = greenplum_get_connection()
     mongo_coll = mongo_get_collection()
 
-    with green_conn as gconn:
+    with green_conn as gconn:                       #добавить получение conn и commit в каждую функцию миграции
         with psql_conn as pconn:
             # truncate_database(gconn, "inmon")
+            # gconn.commit()
             # migrate_sex(pconn, gconn, mongo_coll)
+            # gconn.commit()
+            # migrate_noc(pconn, gconn, mongo_coll)
             # gconn.commit()
             # migrate_team(pconn, gconn, mongo_coll)
             # gconn.commit()
@@ -108,4 +118,3 @@ if __name__ == '__main__':
             # gconn.commit()
             migrate_result(gconn)
             gconn.commit()
-            # pconn.rollback()

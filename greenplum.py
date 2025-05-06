@@ -11,7 +11,7 @@ def greenplum_get_connection():
         print('Can`t establish connection to database GREENPLUM')
 
 
-def insert_sex(gconn, sex: set):
+def insert_sex(gconn, sex: list):
     """
     Inserting sex table in greenplum
     :param gconn: greenplum connection
@@ -20,10 +20,20 @@ def insert_sex(gconn, sex: set):
     """
     with gconn.cursor() as gcur:
         for s in sex:
+            if s is None:
+                continue
             gcur.execute(f"INSERT INTO inmon.sex(value) VALUES ('{s}')")
 
 
-def insert_team(gconn, team: set):
+def insert_noc(gconn, noc: list):
+    with gconn.cursor() as gcur:
+        for n in noc:
+            if n is None:
+                continue
+            gcur.execute(f"INSERT INTO inmon.noc(code) VALUES ('{n}')")
+
+
+def insert_team(gconn, team: list):
     """
     Inserting team table in greenplum
     :param gconn: greenplum connection
@@ -32,10 +42,16 @@ def insert_team(gconn, team: set):
     """
     with gconn.cursor() as gcur:
         for t in team:
-            gcur.execute(f"INSERT INTO inmon.team(name, noc_code) VALUES ('{t[0]}', '{t[1]}')")
+            if t[0] is None or t[1] is None:
+                continue
+            gcur.execute(f"SELECT id FROM inmon.noc WHERE code = '{t[1]}'")
+            noc_id = gcur.fetchone()
+            if noc_id is None:
+                continue
+            gcur.execute(f"INSERT INTO inmon.team(name, noc_id) VALUES ('{t[0]}', {noc_id[0]})")
 
 
-def insert_athlete(gconn, athlete: set):
+def insert_athlete(gconn, athlete: list):
     """
     Inserting athlete table in greenplum
     :param gconn: greenplum connection
@@ -44,6 +60,8 @@ def insert_athlete(gconn, athlete: set):
     """
     with gconn.cursor() as gcur:
         for a in athlete:
+            if a[0] is None or a[1] is None or a[2] is None or a[3] is None or a[4] is None or a[5] is None:
+                continue
             gcur.execute(
                 f"INSERT INTO inmon.athlete(name, sex_id, age, height, weight, team_id) VALUES (" +
                 f"'{a[0]}'," +
@@ -53,7 +71,7 @@ def insert_athlete(gconn, athlete: set):
                 ")")
 
 
-def insert_city(gconn, city: set):
+def insert_city(gconn, city: list):
     """
     Inserting city table in greenplum
     :param gconn: greenplum connection
@@ -62,10 +80,12 @@ def insert_city(gconn, city: set):
     """
     with gconn.cursor() as gcur:
         for c in city:
+            if c is None:
+                continue
             gcur.execute(f"INSERT INTO inmon.city(name) VALUES ('{c}')")
 
 
-def insert_season(gconn, season: set):
+def insert_season(gconn, season: list):
     """
     Inserting season table in greenplum
     :param gconn: greenplum connection
@@ -74,6 +94,8 @@ def insert_season(gconn, season: set):
     """
     with gconn.cursor() as gcur:
         for s in season:
+            if s is None:
+                continue
             gcur.execute(f"INSERT INTO inmon.season(name) VALUES ('{s}')")
 
 
@@ -86,6 +108,8 @@ def insert_game(gconn, game: list):
     """
     with gconn.cursor() as gcur:
         for g in game:
+            if g[0] is None or g[1] is None or g[2] is None or g[3] is None:
+                continue
             gcur.execute(f"INSERT INTO inmon.game (name, year, season_id, city_id) VALUES (" +
                          f"'{g[0]}', {g[1]}," +
                          f"(SELECT id FROM inmon.season WHERE name='{g[2]}')," +
@@ -102,6 +126,8 @@ def insert_sport(gconn, sport: list):
     """
     with gconn.cursor() as gcur:
         for s in sport:
+            if s is None:
+                continue
             gcur.execute(f"INSERT INTO inmon.sport(name) VALUES ('{s}')")
 
 
@@ -114,10 +140,14 @@ def insert_event(gconn, event: list):
     """
     with gconn.cursor() as gcur:
         for e in event:
+            if e[0] is None or e[1] is None:
+                continue
+            gcur.execute(f"SELECT id FROM inmon.sport WHERE name='{e[1]}'")
+            sport_id = gcur.fetchone()
+            if sport_id is None:
+                continue
             gcur.execute(f"INSERT INTO inmon.event(name, sport_id) VALUES (" +
-                         f"'{e[0]}', " +
-                         f"(SELECT id FROM inmon.sport WHERE name='{e[1]}')" +
-                         ")")
+                         f"'{e[0]}', {sport_id[0]})")
 
 
 def insert_medal(gconn, medal: list):
@@ -129,7 +159,16 @@ def insert_medal(gconn, medal: list):
     """
     with gconn.cursor() as gcur:
         for m in medal:
+            if m is None:
+                continue
             gcur.execute(f"INSERT INTO inmon.medal(name) VALUES ('{m}')")
+
+
+def find_in_list(name, list):
+    for i in range(len(list)):
+        if list[i][1] == name:
+            return list[i][0]
+    return None
 
 
 def insert_participation(gconn, participation: list):
@@ -140,13 +179,49 @@ def insert_participation(gconn, participation: list):
     :return:
     """
     with gconn.cursor() as gcur:
+        gcur.execute("SELECT id, name FROM inmon.athlete")
+        athletes = gcur.fetchall()
+        gcur.execute("SELECT id, name FROM inmon.game")
+        games = gcur.fetchall()
+        gcur.execute("SELECT id, name FROM inmon.event")
+        events = gcur.fetchall()
+
         for p in participation:
-            gcur.execute(f"INSERT INTO inmon.participation(athlete_id, game_id, event_id, medal_id) VALUES ("
-                         f"(SELECT id FROM inmon.athlete WHERE name='{p[0]}'), "
-                         f"(SELECT id FROM inmon.game WHERE name='{p[1]}'),"
-                         f"(SELECT id FROM inmon.event WHERE name='{p[2]}'), "
-                         f"(SELECT id FROM inmon.medal WHERE name='{p[3]}')"
-                         ")")
+            if p[0] is None or p[1] is None or p[2] is None:
+                continue
+            # gcur.execute(f"SELECT id FROM inmon.athlete WHERE name='{p[0]}'")
+            # a_id = gcur.fetchone()
+            a_id = find_in_list(p[0], athletes)
+            if a_id is None:
+                continue
+            # gcur.execute(f"SELECT id FROM inmon.game WHERE name='{p[1]}'")
+            # g_id = gcur.fetchone()
+            g_id = find_in_list(p[1], games)
+            if g_id is None:
+                continue
+            # gcur.execute(f"SELECT id FROM inmon.event WHERE name='{p[2]}'")
+            # e_id = gcur.fetchone()
+            e_id = find_in_list(p[2], events)
+            if e_id is None:
+                continue
+
+            m_id = None
+            if p[3] is not None:
+                gcur.execute(f"SELECT id FROM inmon.medal WHERE name='{p[3]}'")
+                m_id = gcur.fetchone()
+            if m_id is not None:
+                gcur.execute(f"INSERT INTO inmon.participation(athlete_id, game_id, event_id, medal_id) VALUES ("
+                             f"{a_id}, "
+                             f"{g_id}, "
+                             f"{e_id}, "
+                             f"{m_id[0]}"
+                             ")")  # Вставляет только значения medal_id != NULL
+            else:
+                gcur.execute(f"INSERT INTO inmon.participation(athlete_id, game_id, event_id) VALUES ("
+                             f"{a_id}, "
+                             f"{g_id}, "
+                             f"{e_id}"
+                             ")")
 
 
 def insert_result(gconn, results: list):
@@ -194,7 +269,11 @@ def insert_result(gconn, results: list):
             if "value" not in result:
                 continue
             value = float(result['value'])
-            gcur.execute(f"INSERT INTO inmon.result(participation_id, value) VALUES ({part_id}, {value})")
+            gcur.execute(f"INSERT INTO inmon.result(value) VALUES ({value})")
+            gcur.execute(f"SELECT id FROM inmon.result WHERE value = {value}")
+            res_id = gcur.fetchone()[0]
+            gcur.execute(
+                f"UPDATE inmon.participation SET result_id = {res_id} WHERE id = {part_id}")  # ошибка из-за того что нету в participation некоторых id
 
 
 def truncate_database(gconn, database_name):
@@ -218,4 +297,5 @@ def truncate_database(gconn, database_name):
             gcur.execute(f"TRUNCATE TABLE {database_name}.sport")
             gcur.execute(f"TRUNCATE TABLE {database_name}.city")
             gcur.execute(f"TRUNCATE TABLE {database_name}.sex")
+            gcur.execute(f"TRUNCATE TABLE {database_name}.noc")
             gcur.execute(f"TRUNCATE TABLE {database_name}.team")

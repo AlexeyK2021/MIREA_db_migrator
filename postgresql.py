@@ -88,6 +88,6 @@ def psql_get_participation(pconn) -> list:
     :return: list[athlete_name:str, game_name:str, event_name:str, medal_name:str]
     """
     with pconn.cursor() as pcur:
-        pcur.execute("SELECT * FROM kalashnikov_aa.participation_values")
+        pcur.execute("SELECT * FROM kalashnikov_aa.participation_values_na")
         participation = pcur.fetchall()
     return participation
