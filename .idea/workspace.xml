@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="855f9f39-8c76-4951-b172-0898e33bc6b7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrate_to_kstar/greenplum.py" beforeDir="false" afterPath="$PROJECT_DIR$/migrate_to_kstar/greenplum.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrate_to_kstar/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/migrate_to_kstar/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrate_to_kstar/postgresql.py" beforeDir="false" afterPath="$PROJECT_DIR$/migrate_to_kstar/postgresql.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prometheus.py" beforeDir="false" afterPath="$PROJECT_DIR$/prometheus.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrate_to_kstar/postgresql.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +37,7 @@
   "keyToString": {
     "Python.main (1).executor": "Run",
     "Python.main (2).executor": "Run",
+    "Python.main (3).executor": "Debug",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -60,7 +58,7 @@
       <recent name="E:\Prog\Python\MIREA_db_merger" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main (2)">
+  <component name="RunManager" selected="Python.main (3)">
     <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MIREA_db_merger" />
       <option name="ENV_FILES" value="" />
@@ -107,6 +105,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main (3)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MIREA_db_merger" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/migrate_to_ksnow" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/migrate_to_ksnow/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MIREA_db_merger" />
       <option name="ENV_FILES" value="" />
@@ -132,6 +153,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main (3)" />
         <item itemvalue="Python.main (2)" />
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.main" />
@@ -165,7 +187,7 @@
       <workItem from="1746534782093" duration="1378000" />
       <workItem from="1746538312841" duration="5048000" />
       <workItem from="1746543375795" duration="635000" />
-      <workItem from="1746600720372" duration="4567000" />
+      <workItem from="1746600720372" duration="7759000" />
     </task>
     <servers />
   </component>
@@ -184,8 +206,9 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MIREA_db_merger$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1746608346876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_ksnow" />
     <SUITE FILE_PATH="coverage/MIREA_db_merger$main.coverage" NAME="main Coverage Results" MODIFIED="1745666522103" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MIREA_db_merger$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1745778921533" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_inmon" />
-    <SUITE FILE_PATH="coverage/MIREA_db_merger$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1746605232835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_kstar" />
+    <SUITE FILE_PATH="coverage/MIREA_db_merger$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1746605297368" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_kstar" />
   </component>
 </project>

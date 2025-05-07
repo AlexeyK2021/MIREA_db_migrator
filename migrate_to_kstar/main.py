@@ -86,16 +86,9 @@ def migrate_result():
 
 
 if __name__ == '__main__':
-    # pconn = psql_get_connection()
-    # gconn = greenplum_get_connection()
-    # migrate_athlete()
-    # migrate_event()
-    # migrate_game()
-    # migrate_medal()
-    # migrate_participation()
-    # migrate_result()
-    # mcoll = mongo_get_collection()
-    # c = mongo_get_columns(mcoll, "Name", ["Age", "Height", "Weight", "Team", "NOC"])
-    # for k, v in c.items():
-    #     print(f"{k} -> {v}")
-    # print(prometheus_get_metrics_by_series("olympic_athlete_time")["data"])
+    migrate_athlete()
+    migrate_event()
+    migrate_game()
+    migrate_medal()
+    migrate_participation()
+    migrate_result()
