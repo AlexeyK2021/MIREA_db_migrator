@@ -12,3 +12,14 @@
 #                      "JOIN noc AS n ON t.noc_id = n.id ")
 #         athlete = pcur.fetchall()
 #     return athlete
+
+def psql_get_participation(pconn) -> list:
+    """
+    Returns data from participation table
+    :param pconn: postgres connection
+    :return: list[athlete_name:str, game_name:str, event_name:str, medal_name:str]
+    """
+    with pconn.cursor() as pcur:
+        pcur.execute("SELECT * FROM kalashnikov_aa.participation_values")
+        participation = pcur.fetchall()
+    return participation
