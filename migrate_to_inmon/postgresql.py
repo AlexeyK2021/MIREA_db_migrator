@@ -49,10 +49,8 @@ def psql_get_game(pconn) -> list:
     :return: [[game_name:str, game_year:str, season_name:str, city_name:str]]
     """
     with pconn.cursor() as pcur:
-        pcur.execute("SELECT g.name, g.year, s.name, c.name " +
-                     "FROM kalashnikov_aa.game AS g " +
-                     "JOIN city AS c ON g.city_id = c.id " +
-                     "JOIN season AS s ON g.season_id = s.id")
+        pcur.execute("SELECT g.name, g.year " +
+                     "FROM kalashnikov_aa.game AS g ")
         game = pcur.fetchall()
     return game
 

@@ -34,10 +34,3 @@ def greenplum_get_connection():
     except psycopg2.Error as e:
         print('Can`t establish connection to database GREENPLUM')
 
-
-def prometheus_get_metrics_by_series(serie):
-    url = prometheusUrl + f"series?match[]={serie}"
-    response = requests.get(url)
-    body = response.text
-    json_data = json.loads(body)
-    return json_data
