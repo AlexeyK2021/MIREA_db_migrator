@@ -16,6 +16,12 @@ def insert_sex(gconn, sex: list):
 
 
 def insert_noc(gconn, noc: list):
+    """
+    Inserting noc table in greenplum
+    :param gconn: greenplum connection
+    :param noc: [noc:str]
+    :return:
+    """
     with gconn.cursor() as gcur:
         for n in noc:
             if n is None:

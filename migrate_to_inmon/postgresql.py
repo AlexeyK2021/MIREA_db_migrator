@@ -44,9 +44,9 @@ def psql_get_athlete(pconn) -> list:
 
 def psql_get_game(pconn) -> list:
     """
-    Returns data from game table with join city and season tables
+    Returns data from game table
     :param pconn: postgres connection
-    :return: [[game_name:str, game_year:str, season_name:str, city_name:str]]
+    :return: [[game_name:str, game_year:str]]
     """
     with pconn.cursor() as pcur:
         pcur.execute("SELECT g.name, g.year " +
