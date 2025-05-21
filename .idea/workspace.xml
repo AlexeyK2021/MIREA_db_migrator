@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="855f9f39-8c76-4951-b172-0898e33bc6b7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connect.py" beforeDir="false" afterPath="$PROJECT_DIR$/connect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/greenplum_kstar_to_clickhouse/clickhouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/greenplum_kstar_to_clickhouse/clickhouse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/greenplum_kstar_to_clickhouse/greenplum.py" beforeDir="false" afterPath="$PROJECT_DIR$/greenplum_kstar_to_clickhouse/greenplum.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/greenplum_kstar_to_clickhouse/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/greenplum_kstar_to_clickhouse/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +40,7 @@
     "Python.main (3).executor": "Debug",
     "Python.main (4).executor": "Run",
     "Python.main (5).executor": "Run",
-    "Python.main.executor": "Run",
+    "Python.main.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
@@ -56,6 +56,9 @@
   "keyToStringList": {
     "DatabaseDriversLRU": [
       "clickhouse"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "Greenplum"
     ]
   }
 }]]></component>
@@ -224,7 +227,9 @@
       <workItem from="1747210440618" duration="22000" />
       <workItem from="1747218244331" duration="9000" />
       <workItem from="1747401238424" duration="21000" />
-      <workItem from="1747579413888" duration="2617000" />
+      <workItem from="1747579413888" duration="2780000" />
+      <workItem from="1747729784131" duration="7000" />
+      <workItem from="1747815359438" duration="4627000" />
     </task>
     <servers />
   </component>
@@ -260,13 +265,23 @@
           <line>184</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/greenplum_kstar_to_clickhouse/main.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/greenplum_kstar_to_clickhouse/clickhouse.py</url>
+          <line>91</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MIREA_db_merger$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1746608346876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_ksnow" />
     <SUITE FILE_PATH="coverage/MIREA_db_merger$main__4_.coverage" NAME="main (4) Coverage Results" MODIFIED="1746619385399" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_datavault" />
-    <SUITE FILE_PATH="coverage/MIREA_db_merger$main.coverage" NAME="main Coverage Results" MODIFIED="1747581349768" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/greenplum_kstar_to_clickhouse" />
+    <SUITE FILE_PATH="coverage/MIREA_db_merger$main.coverage" NAME="main Coverage Results" MODIFIED="1747818367441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/greenplum_kstar_to_clickhouse" />
     <SUITE FILE_PATH="coverage/MIREA_db_merger$main__5_.coverage" NAME="main (5) Coverage Results" MODIFIED="1746872485398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_anchor" />
     <SUITE FILE_PATH="coverage/MIREA_db_merger$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1745778921533" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_inmon" />
     <SUITE FILE_PATH="coverage/MIREA_db_merger$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1746605297368" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/migrate_to_kstar" />
